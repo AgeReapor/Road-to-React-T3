@@ -1,0 +1,86 @@
+<!-- canvas: https://youtu.be/3b7FyIxWW94?si=nCRm5_4iE4Q8RvM3 -->
+<!-- react: https://youtu.be/BHsM7EBrH80?t=4252 -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vanila JS T3</title>
+    <link rel="stylesheet" href="./css/index.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+  </head>
+  <body>
+    <main>
+      <div class="grid">
+        <!-- Turn Indicator -->
+        <div class="turn">
+          <span class="material-symbols-outlined"> close </span>
+          <p>Player 1, you're up!</p>
+        </div>
+
+        <!-- Dropdown Menu -->
+        <div class="menu">
+          <button class="menu-btn turquoise shadow" data-id="menu-button">
+            Actions
+            <span class="material-symbols-outlined"> keyboard_arrow_down </span>
+          </button>
+          <div class="items border shadow hidden">
+            <button>Reset</button>
+            <button>New Round</button>
+          </div>
+        </div>
+
+        <!-- Game Board -->
+        <div class="square shadow"></div>
+        <div class="square shadow"></div>
+        <div class="square shadow"></div>
+        <div class="square shadow"></div>
+        <div class="square shadow"></div>
+        <div class="square shadow"></div>
+        <div class="square shadow"></div>
+        <div class="square shadow"></div>
+        <div class="square shadow"></div>
+
+        <!-- Score Board -->
+        <div class="score shadow" style="background-color: var(--turquoise)">
+          <p>Player 1</p>
+          <span>0 Wins</span>
+        </div>
+        <div class="score shadow">
+          <p>Ties</p>
+          <span>0</span>
+        </div>
+        <div class="score shadow" style="background-color: var(--yellow)">
+          <p>Player 2</p>
+          <span>0 Wins</span>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>
+        Original project by
+        <a href="https://twitter.com/megfdev">@megfdev</a>
+        <a href="https://twitter.com/Ivan00sto">@iIvan00Sto</a>
+      </p>
+
+      <p>
+        Refactored by
+        <a href="https://github.com/AgeReapor" style="color: var(--turquoise)"
+          >@AgeReapor</a
+        >
+      </p>
+    </footer>
+
+    <div class="modal hidden">
+      <div class="modal-contents">
+        <p>Player 1 wins!</p>
+        <button>Play again</button>
+      </div>
+    </div>
+  </body>
+</html>
