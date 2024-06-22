@@ -1,5 +1,4 @@
-<!-- canvas: https://youtu.be/3b7FyIxWW94?si=nCRm5_4iE4Q8RvM3 -->
-<!-- react: https://youtu.be/BHsM7EBrH80?t=4252 -->
+<!-- react: https://youtu.be/BHsM7EBrH80?t=10639 -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +16,7 @@
     <main>
       <div class="grid">
         <!-- Turn Indicator -->
-        <div class="turn">
+        <div class="turn yellow" data-id="turn">
           <span class="material-symbols-outlined"> close </span>
           <p>Player 1, you're up!</p>
         </div>
@@ -77,10 +76,10 @@
       </p>
     </footer>
 
-    <div class="modal hidden">
+    <div class="modal hidden" data-id="modal">
       <div class="modal-contents">
-        <p>Player 1 wins!</p>
-        <button>Play again</button>
+        <p data-id="modal-text">Player 1 wins!</p>
+        <button data-id="modal-btn">Play again</button>
       </div>
     </div>
 

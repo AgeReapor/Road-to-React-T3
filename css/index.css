@@ -67,7 +67,6 @@ button:hover {
 }
 
 .turn {
-  color: var(--yellow);
   grid-column-start: 1;
   grid-column-end: 3;
   display: flex;
@@ -237,5 +236,8 @@ footer a {
     grid-template-columns: repeat(3, 150px);
     grid-template-rows: 50px repeat(3, 150px) 60px;
     gap: 15px;
+  }
+  .square span {
+    font-size: 3rem;
   }
 }
