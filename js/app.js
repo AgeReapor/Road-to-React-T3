@@ -1,4 +1,31 @@
-// Namespace
+import View from "./view.js";
+
+function init() {
+  const view = new View();
+
+  view.bindGameResetEvent((e) => {
+    console.log("Reset Event");
+    console.log(e);
+  });
+
+  view.bindNewRoundEvent((e) => {
+    console.log("New Round Event");
+    console.log(e);
+  });
+
+  view.bindPlayerMoveEvent((e) => {
+    console.log("Player Move Event");
+    console.log(e);
+
+    view.setTurnIndicator(2);
+  });
+
+  console.log(view.$);
+}
+
+window.addEventListener("load", init);
+
+// For Reference
 const App = {
   // All of selected HTML Elements
   $: {
@@ -175,6 +202,3 @@ const App = {
     });
   },
 };
-
-// Initialize the app
-window.addEventListener("load", App.init);

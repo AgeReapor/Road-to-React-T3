@@ -8,6 +8,8 @@
   --white: #f7ebfd;
   --turquoise: #37e2d5;
   --yellow: #fbcb0a;
+
+  --gray-transparent: rgba(211, 211, 211, 0.4);
 }
 
 *,
@@ -55,6 +57,10 @@ body {
 button:hover {
   cursor: pointer;
   opacity: 0.9;
+}
+
+.border {
+  border: 1px solid var(--gray-transparent) !important;
 }
 
 /* Game Board */
