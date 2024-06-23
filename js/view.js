@@ -55,17 +55,25 @@ export default class View {
         : "keyboard_arrow_down";
   }
 
+  handlePlayerMove(square, player) {
+    const icon = this.#createIcon(player);
+    icon.classList.add(
+      player == 1 ? "board-x" : "board-o",
+      player == 1 ? "yellow" : "turquoise"
+    );
+    square.replaceChildren(icon);
+  }
+
   // player = 1 | 2
   setTurnIndicator(player) {
-    const icon = document.createElement("span");
-    icon.classList.add("material-symbols-outlined");
     const label = document.createElement("p");
 
     this.$.turn.classList.add(player === 1 ? "yellow" : "turquoise");
     this.$.turn.classList.remove(player === 1 ? "turquoise" : "yellow");
 
-    icon.innerText = player === 1 ? "close" : "circle";
     label.innerText = `Player ${player}, you're up!`;
+
+    const icon = this.#createIcon(player);
 
     this.$.turn.replaceChildren(icon, label);
   }
@@ -80,5 +88,14 @@ export default class View {
     const el = document.querySelectorAll(selector);
     if (!el) throw new Error(`Elements not found: ${selector}`);
     return el;
+  }
+
+  // player = 1 | 2
+  #createIcon(player) {
+    const icon = document.createElement("span");
+    icon.classList.add("material-symbols-outlined");
+    icon.innerText = player === 1 ? "close" : "circle";
+
+    return icon;
   }
 }

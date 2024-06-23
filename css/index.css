@@ -86,6 +86,14 @@ button:hover {
   animation: turn-text-animation 0.6s ease-in-out both;
 }
 
+span.board-x {
+  font-size: 2em;
+}
+
+span.board-o {
+  font-size: 1.5em;
+}
+
 @keyframes turn-text-animation {
   0% {
     opacity: 0;
@@ -243,7 +251,11 @@ footer a {
     grid-template-rows: 50px repeat(3, 150px) 60px;
     gap: 15px;
   }
-  .square span {
-    font-size: 3rem;
+  span.board-x {
+    font-size: 3em;
+  }
+
+  span.board-o {
+    font-size: 2.3em;
   }
 }
