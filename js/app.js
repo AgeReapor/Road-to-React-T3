@@ -47,6 +47,8 @@ function init() {
   });
 
   view.bindPlayerMoveEvent((square) => {
+    console.log(square);
+
     // Check if move already exists
     const existingMove = store.game.moves.find(
       (move) => move.squareId === +square.id
