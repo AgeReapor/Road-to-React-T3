@@ -12,6 +12,9 @@ export default class View {
     this.$.modalText = this.#qs("[data-id=modal-text]");
     this.$.modalBtn = this.#qs("[data-id=modal-btn]");
     this.$.turn = this.#qs("[data-id=turn]");
+    this.$.p1Wins = this.#qs("[data-id=p1-wins]");
+    this.$.p2Wins = this.#qs("[data-id=p2-wins]");
+    this.$.ties = this.#qs("[data-id=ties]");
 
     this.$$.squares = this.#qsAll("[data-id=square]");
 
@@ -21,12 +24,37 @@ export default class View {
     });
   }
 
+  render(game, stats) {
+    const { playerWithStats, ties } = stats;
+    const {
+      moves,
+      currentPlayer,
+      status: { isComplete, winner },
+    } = game;
+
+    this.#closeAll();
+    this.#clearMoves();
+    this.#updateScoreboard(
+      playerWithStats[0].wins,
+      playerWithStats[1].wins,
+      ties
+    );
+    this.#initializeMoves(moves);
+
+    if (isComplete) {
+      this.#openModal(winner ? `${winner.name} Wins!` : "It's a Tie!");
+      return;
+    }
+    this.#setTurnIndicator(currentPlayer);
+  }
+
   /**
    * Register Event Listeners
    */
 
   bindGameResetEvent(handler) {
     this.$.resetBtn.addEventListener("click", handler);
+    this.$.modalBtn.addEventListener("click", handler);
   }
 
   bindNewRoundEvent(handler) {
@@ -35,13 +63,58 @@ export default class View {
 
   bindPlayerMoveEvent(handler) {
     this.$$.squares.forEach((square) => {
-      square.addEventListener("click", handler);
+      square.addEventListener("click", () => handler(square));
     });
   }
 
   /**
    * DOM Helper Methods
    */
+
+  #updateScoreboard(p1Wins, p2Wins, ties) {
+    this.$.p1Wins.innerText = `${p1Wins} Wins`;
+    this.$.p2Wins.innerText = `${p2Wins} Wins`;
+    this.$.ties.innerText = ties;
+  }
+
+  #openModal(message) {
+    this.$.modal.classList.remove("hidden");
+
+    this.$.modalText.innerText = message;
+  }
+
+  #closeModal() {
+    this.$.modal.classList.add("hidden");
+  }
+
+  #initializeMoves(moves) {
+    this.$$.squares.forEach((square) => {
+      const existingMove = moves.find((move) => move.squareId === +square.id);
+
+      if (existingMove) {
+        this.#handlePlayerMove(square, existingMove.player);
+      }
+    });
+  }
+
+  #closeMenu() {
+    this.$.menuItems.classList.add("hidden");
+    this.$.menuBtn.classList.remove("border");
+
+    const icon = this.$.menuBtn.querySelector(".material-symbols-outlined");
+    icon.innerText = "keyboard_arrow_down";
+  }
+
+  #closeAll() {
+    this.#closeModal();
+    this.#closeMenu();
+  }
+
+  #clearMoves() {
+    this.$$.squares.forEach((square) => {
+      square.replaceChildren();
+    });
+  }
 
   #toggleMenu() {
     this.$.menuItems.classList.toggle("hidden");
@@ -55,25 +128,19 @@ export default class View {
         : "keyboard_arrow_down";
   }
 
-  handlePlayerMove(square, player) {
+  #handlePlayerMove(square, player) {
     const icon = this.#createIcon(player);
-    icon.classList.add(
-      player == 1 ? "board-x" : "board-o",
-      player == 1 ? "yellow" : "turquoise"
-    );
+    icon.classList.add(player.boardFontClass);
     square.replaceChildren(icon);
   }
 
   // player = 1 | 2
-  setTurnIndicator(player) {
+  #setTurnIndicator(player) {
     const label = document.createElement("p");
-
-    this.$.turn.classList.add(player === 1 ? "yellow" : "turquoise");
-    this.$.turn.classList.remove(player === 1 ? "turquoise" : "yellow");
-
-    label.innerText = `Player ${player}, you're up!`;
-
     const icon = this.#createIcon(player);
+
+    label.classList.add(player.colorClass);
+    label.innerText = `${player.name}, you're up!`;
 
     this.$.turn.replaceChildren(icon, label);
   }
@@ -90,12 +157,12 @@ export default class View {
     return el;
   }
 
-  // player = 1 | 2
   #createIcon(player) {
     const icon = document.createElement("span");
-    icon.classList.add("material-symbols-outlined");
-    icon.innerText = player === 1 ? "close" : "circle";
-
+    icon.classList.add("material-symbols-outlined", player.colorClass);
+    icon.innerText = player.iconString;
     return icon;
   }
+
+  #delegate;
 }

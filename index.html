@@ -1,4 +1,4 @@
-<!-- react: https://youtu.be/BHsM7EBrH80?t=13850 -->
+<!-- react: https://youtu.be/BHsM7EBrH80?t=19127 -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,11 +14,11 @@
   </head>
   <body>
     <main>
-      <div class="grid">
+      <div class="grid" data-id="grid">
         <!-- Turn Indicator -->
-        <div class="turn yellow" data-id="turn">
-          <span class="material-symbols-outlined"> close </span>
-          <p>Player 1, you're up!</p>
+        <div class="turn" data-id="turn">
+          <span class="material-symbols-outlined yellow"> close </span>
+          <p class="yellow">Player 1, you're up!</p>
         </div>
 
         <!-- Dropdown Menu -->
@@ -46,17 +46,17 @@
         <div id="9" class="square shadow" data-id="square"></div>
 
         <!-- Score Board -->
-        <div class="score shadow" style="background-color: var(--turquoise)">
+        <div class="score shadow" style="background-color: var(--yellow)">
           <p>Player 1</p>
-          <span>0 Wins</span>
+          <span data-id="p1-wins">0 Wins</span>
         </div>
         <div class="score shadow">
           <p>Ties</p>
-          <span>0</span>
+          <span data-id="ties">0</span>
         </div>
-        <div class="score shadow" style="background-color: var(--yellow)">
+        <div class="score shadow" style="background-color: var(--turquoise)">
           <p>Player 2</p>
-          <span>0 Wins</span>
+          <span data-id="p2-wins">0 Wins</span>
         </div>
       </div>
     </main>
