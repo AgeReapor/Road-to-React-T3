@@ -1,44 +1,64 @@
-// Namespace
-const App = {
-  // All of selected HTML Elements
-  $: {
-    menu: document.querySelector("[data-id='menu']"),
-    menuItems: document.querySelector("[data-id='menu-items']"),
-    resetBtn: document.querySelector("[data-id=reset-btn]"),
-    newRoundBtn: document.querySelector("[data-id=new-round-btn]"),
-    squares: document.querySelectorAll("[data-id=square]"),
+import View from "./view.js";
+import Store from "./store.js";
+
+const players = [
+  {
+    id: 1,
+    name: "Player 1",
+    iconString: "close",
+    colorClass: "yellow",
+    boardFontClass: "board-x",
   },
-
-  init() {
-    App.registerEventListeners();
+  {
+    id: 2,
+    name: "Player 2",
+    iconString: "circle",
+    colorClass: "turquoise",
+    boardFontClass: "board-o",
   },
+];
 
-  registerEventListeners() {
-    // add event listeners
+function init() {
+  const view = new View();
+  const store = new Store("live-t3-storage-key", players);
 
-    // DONE
-    App.$.menu.addEventListener("click", (e) => {
-      App.$.menuItems.classList.toggle("hidden");
-    });
+  // Current tab state changes
+  store.addEventListener("stateChanged", () => {
+    view.render(store.game, store.stats);
+  });
 
-    // TODO
-    App.$.resetBtn.addEventListener("click", () => {
-      console.log("Game Reset");
-    });
+  // Different tab state changes
+  window.addEventListener("storage", (e) => {
+    console.log("State changed in another tab");
+    if (e.key === store.storageKey) {
+      view.render(store.game, store.stats);
+    }
+  });
 
-    // TODO
-    App.$.newRoundBtn.addEventListener("click", () => {
-      console.log("New Round");
-    });
+  // Initial render
+  view.render(store.game, store.stats);
 
-    // DONE
-    App.$.squares.forEach((square) => {
-      square.addEventListener("click", () => {
-        console.log(`Square ${square.id} Clicked`);
-      });
-    });
-  },
-};
+  view.bindGameResetEvent((e) => {
+    store.reset();
+  });
 
-// Initialize the app
-window.addEventListener("load", App.init);
+  view.bindNewRoundEvent((e) => {
+    store.newRound();
+  });
+
+  view.bindPlayerMoveEvent((square) => {
+    // Check if move already exists
+    const existingMove = store.game.moves.find(
+      (move) => move.squareId === +square.id
+    );
+
+    if (existingMove) return;
+
+    // Store move and set next player
+    store.playerMove(+square.id);
+  });
+
+  console.log(view.$);
+}
+
+window.addEventListener("load", init);

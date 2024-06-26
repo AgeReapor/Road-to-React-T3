@@ -8,6 +8,8 @@
   --white: #f7ebfd;
   --turquoise: #37e2d5;
   --yellow: #fbcb0a;
+
+  --gray-transparent: rgba(211, 211, 211, 0.4);
 }
 
 *,
@@ -57,6 +59,10 @@ button:hover {
   opacity: 0.9;
 }
 
+.border {
+  border: 1px solid var(--gray-transparent) !important;
+}
+
 /* Game Board */
 .grid {
   display: grid;
@@ -67,7 +73,6 @@ button:hover {
 }
 
 .turn {
-  color: var(--yellow);
   grid-column-start: 1;
   grid-column-end: 3;
   display: flex;
@@ -79,6 +84,14 @@ button:hover {
 .turn p {
   font-size: 14px;
   animation: turn-text-animation 0.6s ease-in-out both;
+}
+
+span.board-x {
+  font-size: 2em;
+}
+
+span.board-o {
+  font-size: 1.5em;
 }
 
 @keyframes turn-text-animation {
@@ -237,5 +250,12 @@ footer a {
     grid-template-columns: repeat(3, 150px);
     grid-template-rows: 50px repeat(3, 150px) 60px;
     gap: 15px;
+  }
+  span.board-x {
+    font-size: 3em;
+  }
+
+  span.board-o {
+    font-size: 2.3em;
   }
 }

@@ -1,5 +1,4 @@
-<!-- canvas: https://youtu.be/3b7FyIxWW94?si=nCRm5_4iE4Q8RvM3 -->
-<!-- react: https://youtu.be/BHsM7EBrH80?t=4252 -->
+<!-- react: https://youtu.be/BHsM7EBrH80?t=19127 -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,16 +14,16 @@
   </head>
   <body>
     <main>
-      <div class="grid">
+      <div class="grid" data-id="grid">
         <!-- Turn Indicator -->
-        <div class="turn">
-          <span class="material-symbols-outlined"> close </span>
-          <p>Player 1, you're up!</p>
+        <div class="turn" data-id="turn">
+          <span class="material-symbols-outlined yellow"> close </span>
+          <p class="yellow">Player 1, you're up!</p>
         </div>
 
         <!-- Dropdown Menu -->
         <div class="menu" data-id="menu">
-          <button class="menu-btn turquoise shadow">
+          <button class="menu-btn turquoise shadow" data-id="menu-btn">
             Actions
             <span class="material-symbols-outlined"> keyboard_arrow_down </span>
           </button>
@@ -47,17 +46,17 @@
         <div id="9" class="square shadow" data-id="square"></div>
 
         <!-- Score Board -->
-        <div class="score shadow" style="background-color: var(--turquoise)">
+        <div class="score shadow" style="background-color: var(--yellow)">
           <p>Player 1</p>
-          <span>0 Wins</span>
+          <span data-id="p1-wins">0 Wins</span>
         </div>
         <div class="score shadow">
           <p>Ties</p>
-          <span>0</span>
+          <span data-id="ties">0</span>
         </div>
-        <div class="score shadow" style="background-color: var(--yellow)">
+        <div class="score shadow" style="background-color: var(--turquoise)">
           <p>Player 2</p>
-          <span>0 Wins</span>
+          <span data-id="p2-wins">0 Wins</span>
         </div>
       </div>
     </main>
@@ -77,13 +76,13 @@
       </p>
     </footer>
 
-    <div class="modal hidden">
+    <div class="modal hidden" data-id="modal">
       <div class="modal-contents">
-        <p>Player 1 wins!</p>
-        <button>Play again</button>
+        <p data-id="modal-text">Player 1 wins!</p>
+        <button data-id="modal-btn">Play again</button>
       </div>
     </div>
 
-    <script src="./js/app.js"></script>
+    <script src="./js/app.js" type="module"></script>
   </body>
 </html>
