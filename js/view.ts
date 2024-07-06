@@ -15,6 +15,7 @@ export default class View {
     this.$.p1Wins = this.#qs("[data-id=p1-wins]");
     this.$.p2Wins = this.#qs("[data-id=p2-wins]");
     this.$.ties = this.#qs("[data-id=ties]");
+    this.$.grid = this.#qs("[data-id=grid]");
 
     this.$$.squares = this.#qsAll("[data-id=square]");
 
@@ -62,9 +63,10 @@ export default class View {
   }
 
   bindPlayerMoveEvent(handler) {
-    this.$$.squares.forEach((square) => {
-      square.addEventListener("click", () => handler(square));
-    });
+    // this.$$.squares.forEach((square) => {
+    //   square.addEventListener("click", () => handler(square));
+    // });
+    this.#delegate(this.$.grid, "[data-id=square]", "click", handler);
   }
 
   /**
@@ -162,5 +164,13 @@ export default class View {
     icon.classList.add("material-symbols-outlined", player.colorClass);
     icon.innerText = player.iconString;
     return icon;
+  }
+
+  #delegate(element, selector, eventKey, handler) {
+    element.addEventListener(eventKey, (e) => {
+      if (e.target.matches(selector)) {
+        handler(e.target);
+      }
+    });
   }
 }
