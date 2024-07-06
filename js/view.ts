@@ -1,6 +1,6 @@
 export default class View {
-  $ = {};
-  $$ = {};
+  $: Record<string, Element> = {};
+  $$: Record<string, NodeListOf<Element>> = {};
 
   constructor() {
     this.$.menu = this.#qs("[data-id=menu]");
@@ -145,13 +145,13 @@ export default class View {
     this.$.turn.replaceChildren(icon, label);
   }
 
-  #qs(selector, parent = document) {
+  #qs(selector: string, parent = document) {
     const el = parent.querySelector(selector);
     if (!el) throw new Error(`Element not found: ${selector}`);
     return el;
   }
 
-  #qsAll(selector) {
+  #qsAll(selector: string) {
     const el = document.querySelectorAll(selector);
     if (!el) throw new Error(`Elements not found: ${selector}`);
     return el;
@@ -163,6 +163,4 @@ export default class View {
     icon.innerText = player.iconString;
     return icon;
   }
-
-  #delegate;
 }
