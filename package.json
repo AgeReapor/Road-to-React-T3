@@ -1,0 +1,14 @@
+{
+  "name": "road-to-react",
+  "version": "1.0.0",
+  "description": "Folder used to implmenet Full Stack Zach's Frontend Course",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.5.2"
+  }
+}
