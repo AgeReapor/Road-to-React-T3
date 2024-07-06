@@ -1,3 +1,6 @@
+import type { Move, Player } from "./types";
+import type Store from "./store";
+
 export default class View {
   $: Record<string, Element> = {};
   $$: Record<string, NodeListOf<Element>> = {};
@@ -25,7 +28,7 @@ export default class View {
     });
   }
 
-  render(game, stats) {
+  render(game: Store["game"], stats: Store["stats"]) {
     const { playerWithStats, ties } = stats;
     const {
       moves,
@@ -53,16 +56,16 @@ export default class View {
    * Register Event Listeners
    */
 
-  bindGameResetEvent(handler) {
+  bindGameResetEvent(handler: EventListener) {
     this.$.resetBtn.addEventListener("click", handler);
     this.$.modalBtn.addEventListener("click", handler);
   }
 
-  bindNewRoundEvent(handler) {
+  bindNewRoundEvent(handler: EventListener) {
     this.$.newRoundBtn.addEventListener("click", handler);
   }
 
-  bindPlayerMoveEvent(handler) {
+  bindPlayerMoveEvent(handler: (element: Element) => void) {
     // this.$$.squares.forEach((square) => {
     //   square.addEventListener("click", () => handler(square));
     // });
@@ -73,23 +76,23 @@ export default class View {
    * DOM Helper Methods
    */
 
-  #updateScoreboard(p1Wins, p2Wins, ties) {
-    this.$.p1Wins.innerText = `${p1Wins} Wins`;
-    this.$.p2Wins.innerText = `${p2Wins} Wins`;
-    this.$.ties.innerText = ties;
+  #updateScoreboard(p1Wins: number, p2Wins: number, ties: number) {
+    this.$.p1Wins.textContent = `${p1Wins} Wins`;
+    this.$.p2Wins.textContent = `${p2Wins} Wins`;
+    this.$.ties.textContent = `${ties}`;
   }
 
-  #openModal(message) {
+  #openModal(message: string) {
     this.$.modal.classList.remove("hidden");
 
-    this.$.modalText.innerText = message;
+    this.$.modalText.textContent = message;
   }
 
   #closeModal() {
     this.$.modal.classList.add("hidden");
   }
 
-  #initializeMoves(moves) {
+  #initializeMoves(moves: Move[]) {
     this.$$.squares.forEach((square) => {
       const existingMove = moves.find((move) => move.squareId === +square.id);
 
@@ -103,8 +106,8 @@ export default class View {
     this.$.menuItems.classList.add("hidden");
     this.$.menuBtn.classList.remove("border");
 
-    const icon = this.$.menuBtn.querySelector(".material-symbols-outlined");
-    icon.innerText = "keyboard_arrow_down";
+    const icon = this.#qs(".material-symbols-outlined", this.$.menuBtn);
+    icon.textContent = "keyboard_arrow_down";
   }
 
   #closeAll() {
@@ -122,22 +125,22 @@ export default class View {
     this.$.menuItems.classList.toggle("hidden");
     this.$.menuBtn.classList.toggle("border");
 
-    const icon = this.$.menuBtn.querySelector(".material-symbols-outlined");
+    const icon = this.#qs(".material-symbols-outlined", this.$.menuBtn);
 
-    icon.innerText =
-      icon.innerText === "keyboard_arrow_down"
+    icon.textContent =
+      icon.textContent === "keyboard_arrow_down"
         ? "keyboard_arrow_up"
         : "keyboard_arrow_down";
   }
 
-  #handlePlayerMove(square, player) {
+  #handlePlayerMove(square: Element, player: Player) {
     const icon = this.#createIcon(player);
     icon.classList.add(player.boardFontClass);
     square.replaceChildren(icon);
   }
 
   // player = 1 | 2
-  #setTurnIndicator(player) {
+  #setTurnIndicator(player: Player) {
     const label = document.createElement("p");
     const icon = this.#createIcon(player);
 
@@ -147,7 +150,7 @@ export default class View {
     this.$.turn.replaceChildren(icon, label);
   }
 
-  #qs(selector: string, parent = document) {
+  #qs(selector: string, parent: Element | Document = document) {
     const el = parent.querySelector(selector);
     if (!el) throw new Error(`Element not found: ${selector}`);
     return el;
@@ -159,15 +162,24 @@ export default class View {
     return el;
   }
 
-  #createIcon(player) {
+  #createIcon(player: Player) {
     const icon = document.createElement("span");
     icon.classList.add("material-symbols-outlined", player.colorClass);
     icon.innerText = player.iconString;
     return icon;
   }
 
-  #delegate(element, selector, eventKey, handler) {
+  #delegate(
+    element: Element,
+    selector: string,
+    eventKey: string,
+    handler: (element: Element) => void
+  ) {
     element.addEventListener(eventKey, (e) => {
+      if (!(e.target instanceof Element)) {
+        throw new Error(`Element not found: ${selector}`);
+      }
+
       if (e.target.matches(selector)) {
         handler(e.target);
       }

@@ -10,7 +10,7 @@ const initalValue: GameState = {
 
 export default class Store extends EventTarget {
   constructor(
-    private readonly storageKey: string,
+    public readonly storageKey: string,
     private readonly players: Player[]
   ) {
     super();
