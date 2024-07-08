@@ -21,8 +21,22 @@ export default function Menu({ onAction }: Props) {
       </button>
       {menuOpen && (
         <div className="items border shadow">
-          <button onClick={() => onAction("reset")}>Reset</button>
-          <button onClick={() => onAction("new-round")}>New Round</button>
+          <button
+            onClick={() => {
+              onAction("reset");
+              setMenuOpen(false);
+            }}
+          >
+            Reset
+          </button>
+          <button
+            onClick={() => {
+              onAction("new-round");
+              setMenuOpen(false);
+            }}
+          >
+            New Round
+          </button>
         </div>
       )}
     </div>
