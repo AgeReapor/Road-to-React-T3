@@ -11,4 +11,5 @@ footer p {
 
 footer a {
   color: var(--yellow);
+  margin-left: 5px;
 }
