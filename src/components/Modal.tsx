@@ -2,14 +2,15 @@ import "./Modal.css";
 
 type Props = {
   message: string;
+  onClick(): void;
 };
 
-export default function Modal({ message }: Props) {
+export default function Modal({ message, onClick }: Props) {
   return (
     <div className="modal">
       <div className="modal-contents">
         <p>{message}</p>
-        <button data-id="modal-btn">Play again</button>
+        <button onClick={onClick}>Play again</button>
       </div>
     </div>
   );
