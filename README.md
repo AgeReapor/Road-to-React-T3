@@ -1,2 +1,2 @@
-# Javascript to React Project
- Folder used to implmenet Full Stack Zach's Frontend Course
+# Tic Tac Toe
+Project Repository used for Full Stack Zach's Javascript to React Course
