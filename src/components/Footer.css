@@ -1,0 +1,14 @@
+/* Footer Styles */
+
+footer {
+  color: var(--light-gray);
+}
+
+footer p {
+  margin-top: 10px;
+  text-align: center;
+}
+
+footer a {
+  color: var(--yellow);
+}
